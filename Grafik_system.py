@@ -1,4 +1,3 @@
-from zlib import DEF_BUF_SIZE
 
 
 def welcometext():
@@ -11,14 +10,13 @@ def welcometext():
 
 
 
-
-def foundchesttext(new_w, new_a, new_r, w, a, r):
+def foundchesttext(new_w, new_a, new_r, w, a, r, health, level):
 
     print("\n"*40)
-    print("             Du hittade en kista!             ")
-    print("________________________________________________")
-    print(f"Du får välja en av sakerna i den magiska kistan")
-    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
+    print("             Du hittade en kista!                                         ")
+    print("________________________________________________            ________________________________________________")
+    print(f"Du får välja en av sakerna i den magiska kistan                  Health: {health}            Level: {level}") 
+    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     print("\n\n\n\n")
     
 
@@ -34,21 +32,56 @@ def foundchesttext(new_w, new_a, new_r, w, a, r):
     print("\n\n")
 
 def You_found_a_potion(potiontype):
+    if potiontype == 1:
+        potion = "Healing_potion"
+    if potiontype == 2:
+        potion = "Damage_potion"
+    if potiontype == 3:
+        potion = "Attack_again_potion"
     print("\n"*40)
 
     print("               You Found a potion               ")
     print("________________________________________________")
-    print(f"               {potiontype}                    ")
+    print(f"               {potion}                    ")
     print("\n"*14)
+
+def Potion_inventory_show(potionInventory):
+    healingPotions, damagePotions, attackAgain = potionInventory.count(1), potionInventory.count(2), potionInventory.count(3)
+    print("\nThis is your potion inventory:")
+    print(f"You have {healingPotions} healing potions")
+    print(f"You have {damagePotions} damage potions")
+    print(f"You have {attackAgain} attack again potions")
+
+def Potion_inventory_choice(potionInventory):
+    healingPotions, damagePotions, attackAgain = potionInventory.count(1), potionInventory.count(2), potionInventory.count(3)
+    print("\n\n\nChoose your potion:")
+    print(f"Choice 1 => Healing potion, You have {healingPotions}x")
+    print(f"Choice 2 => Damage potion, You have {damagePotions}x")
+    print(f"Choice 3 => Attack again potion, You have {attackAgain}x")
+
+def Potion_missing():
+    print("You dont have that potion")
+
+def You_used_a_healing_potion(heal, playerhealth):
+    print(f"You used a healing potion and regained {heal} health. You therefor now have {playerhealth}")
+
+def You_used_a_damage_potion():
+    print("You used a damage potion damaging the enemy 100")
+
+
+def You_used_an_attack_again_potion():
+    print("You used an attack again potion wich lets you attack again")
+
+
 
 def Dodged_enemy():
     print("You managed to dodge the monster, damn")
 
 def Found_enemy(monster_attack, monster_health):
-    print(f"A monster is approaching you with {monster_attack} damage and {monster_health} health.")
+    print(f"A monster is approaching you with {monster_attack} damage and {round(monster_health, 2)} health.")
 
 def Dice_roll(attackMultiplier, playerDamage, playerRing):
-    print(f"You rolled a {attackMultiplier} meaning your damage will be multiliped {attackMultiplier /10 + 1}x times! This results in {(attackMultiplier /10 + 1) * playerDamage * playerRing} damage")
+    print(f"You rolled a {attackMultiplier} meaning your damage will be multiliped {attackMultiplier /10 + 1}x times! This results in {round((attackMultiplier /10 + 1) * playerDamage * playerRing, 2)} damage")
 
 def Enemy_struck():
     print("You struck the enemy!")

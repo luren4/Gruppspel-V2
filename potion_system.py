@@ -1,7 +1,5 @@
 import random
 
-potionlist = []
-
 def chance_to_give_potion(level):
     chance = random.randint(1, 10) - 0.1 * level
     if chance > 5:
@@ -12,15 +10,12 @@ def chance_to_give_potion(level):
 def give_potion():
     PotionType = random.randint(1, 3)
     if PotionType == 1:
-        potionlist.append(1)
-        return "Healing potion"
+        return 1
     if PotionType == 2:
-        potionlist.append(2)
-        return "Damage potion"
+        return 2
     if PotionType == 3:
-        potionlist.append(3)
-        return "Attack again potion"
+        return 3
 
-def use_potion(choice):
-    potionlist.remove(choice)
+# def use_potion(choice):
+#     return choice
     

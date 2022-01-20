@@ -4,7 +4,7 @@ def foundchest(w, a, r, l):
         
     new_weapon = (w + random.randint(1, 30)) + 2 * l
     new_armour = (a + random.randint(1, 30)) + 2 * l
-    new_ring = round((r + 0.1 * random.randint(1, 3) + 0.1 * l), 2)
+    new_ring = round((r + 0.05 * random.randint(1, 6) + 0.05 * l), 2)
 
     return (new_weapon, new_armour, new_ring)
 
