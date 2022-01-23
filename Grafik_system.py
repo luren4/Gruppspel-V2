@@ -10,26 +10,29 @@ def welcometext():
 
 
 
-def foundchesttext(new_w, new_a, new_r, w, a, r, health, level):
+def foundchesttext(new_w, new_a, new_r, w, a, r, h, l):
 
     print("\n"*40)
     print("             Du hittade en kista!                                         ")
     print("________________________________________________            ________________________________________________")
-    print(f"Du får välja en av sakerna i den magiska kistan                  Health: {health}            Level: {level}") 
-    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-    print("\n\n\n\n")
-    
-
-
-
-
-    print("             Välj en av nedanstående                                   Ditt inventory just nu             ")
-    print("________________________________________________            ________________________________________________")
-    print(f"Val 1  *  nytt vapen med {new_w} damage                         Ditt svärd har nu {w} damage")
-    print(f"Val 2  *  ny armor med {new_a} i skydd                          Din rustning har nu {a} i skydd")
-    print(f"Val 3  *  ny ring med {new_r} gånger din damage                 Din ring har nu {r} gånger din damage")
+    print(f"Du får välja en av sakerna i den magiska kistan                  Health: {h}            Level: {l}         ") 
+    print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾         __________     ")
+    print("                                                                                                                    /\____;;___\    ")    
+    print("                                                                                                                    | /         /   ")
+    print("                                                                                                                    `. ())oo() .    ")
+    print("                                                                                                                    |\(%()*^^()^\   ")
+    print("             Välj en av nedanstående                                   Ditt inventory just nu                       \ | %  ))   |   ")
+    print("________________________________________________            ________________________________________________         \|%________|   ")
+    print(f"Val 1  *  nytt vapen med {new_w} damage                         Ditt svärd har nu {w} damage               ")
+    print(f"Val 2  *  ny armor med {new_a} i skydd                          Din rustning har nu {a} i skydd            ")
+    print(f"Val 3  *  ny ring med {new_r} gånger din damage                 Din ring har nu {r} gånger din damage      ")
     print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
     print("\n\n")
+
+
+
+
+
 
 def You_found_a_potion(potiontype):
     if potiontype == 1:
@@ -43,7 +46,31 @@ def You_found_a_potion(potiontype):
     print("               You Found a potion               ")
     print("________________________________________________")
     print(f"               {potion}                    ")
-    print("\n"*14)
+    print(" *   )      ")
+    print("    ( *      ")
+    print("   * )       ")
+    print("    [ ]      ")
+    print("    |-|        ")
+    print("    |_|       ")
+    print("    | |       ")
+    print("   /   \      ")
+    print("  |_____|      ")
+    print("  | ___ |       ")
+    print("  | \ / |       ")
+    print("  | _Y_ |         ")
+    print("  |-----|       ")
+    print("  `-----`          ")
+
+
+
+
+
+
+
+
+
+
+
 
 def Potion_inventory_show(potionInventory):
     healingPotions, damagePotions, attackAgain = potionInventory.count(1), potionInventory.count(2), potionInventory.count(3)
@@ -57,7 +84,7 @@ def Potion_inventory_choice(potionInventory):
     print("\n\n\nChoose your potion:")
     print(f"Choice 1 => Healing potion, You have {healingPotions}x")
     print(f"Choice 2 => Damage potion, You have {damagePotions}x")
-    print(f"Choice 3 => Attack again potion, You have {attackAgain}x")
+    print(f"Choice 3 => Attack again potion, You have {attackAgain}x\n")
 
 def Potion_missing():
     print("You dont have that potion")
@@ -70,7 +97,7 @@ def You_used_a_damage_potion():
 
 
 def You_used_an_attack_again_potion():
-    print("You used an attack again potion wich lets you attack again")
+    print("\n\nYou used an attack again potion wich lets you attack again")
 
 
 
@@ -90,11 +117,11 @@ def Killed_enemy():
     print("You killed the enemy")
 
 def Enemy_Survived(remainingEnemyHealth):
-    print(f"The enemy survived your attack and has {remainingEnemyHealth} health left")
+    print(f"The enemy survived your attack and has {round(remainingEnemyHealth, 2)} health left")
 
 
 def Enemy_didnt_pierce_armor(enemyAttack, playerArmor):
-    print(f"The enemy hit you with {enemyAttack} damage but didnt pierce your armor that is {playerArmor}")
+    print(f"The enemy hit you with {enemyAttack} damage but didnt pierce your armor that is {playerArmor}\n")
 
 
 def Player_lost_health(remaining_health):

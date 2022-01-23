@@ -30,120 +30,149 @@ potionlist = []
 #Välkommst medelande ________________________________________________________________
 Grafik_system.welcometext()
 time.sleep(2)
+try:
+    keepgoing = 1
+    while keepgoing == 1:
+        #Kista ______________________________________________________________________________
 
-keepgoing = 1
-while keepgoing == 1:
-    #Kista ______________________________________________________________________________
+        #Här finner spelaren en kista som tar fram tre nya möjliga accesory val
+        new_weapon, new_armor, new_ring = Chest_system.foundchest(playerWeapon, playerArmor, playerRing, playerLevel)
 
-    #Här finner spelaren en kista som tar fram tre nya möjliga accesory val
-    new_weapon, new_armor, new_ring = Chest_system.foundchest(playerWeapon, playerArmor, playerRing, playerLevel)
+        #Här displayas nuvarande men även de nya hitttade accesoriesen
+        Grafik_system.foundchesttext(new_weapon, new_armor, new_ring, playerWeapon, playerArmor, playerRing, playerHealth, playerLevel)
 
-    #Här displayas nuvarande men även de nya hitttade accesoriesen
-    Grafik_system.foundchesttext(new_weapon, new_armor, new_ring, playerWeapon, playerArmor, playerRing, playerHealth, playerLevel)
-
-    #Här väljer spelaren bland de tre nya möjliga valen
-    NewAcessoryChoice = int(input("Välj ditt val --->  "))
-
-    #Här tillsätts det nya valet i spelarens inventory
-    playerWeapon, playerArmor, playerRing = Chest_system.chestchoice(new_weapon, new_armor, new_ring, playerWeapon, playerArmor, playerRing, NewAcessoryChoice)
-    playerLevel += 1
-
-
-    #Potion _____________________________________________________________________________________
-
-    if potion_system.chance_to_give_potion(playerLevel) == True:
-        potiontype = potion_system.give_potion()
-        potionlist.append(potiontype)
-        Grafik_system.You_found_a_potion(potiontype)
-        time.sleep(2)
-
-
-
-
-    
-
-
-
-    #Monster ______________________________________________________________________________
-    #Här finner spelaren ett monster med attack och damage beroende på tur och level
-    if random.randint(1, 10) == 10:
-        Grafik_system.Dodged_enemy()
-        time.sleep(4)
-        skipcombat = True
+        #Här väljer spelaren bland de tre nya möjliga valen
         
-    else:
-        enemyAttack, enemyHealth = Combat_system.found_enemy(playerLevel)
+        NewAcessoryChoice = int(input("Välj ditt val --->  "))
+        
 
-        Grafik_system.Found_enemy(enemyAttack, enemyHealth)
-        time.sleep(3)
-    
-        attackMultiplier = Combat_system.Roll_dice()
-        Grafik_system.Dice_roll(attackMultiplier, playerWeapon, playerRing)
-        time.sleep(4)
-        skipcombat = False
 
-    incombat = True
-    if skipcombat == False:
-        while incombat == True:
+        #Här tillsätts det nya valet i spelarens inventory
+        playerWeapon, playerArmor, playerRing = Chest_system.chestchoice(new_weapon, new_armor, new_ring, playerWeapon, playerArmor, playerRing, NewAcessoryChoice)
+        playerLevel += 1
 
-            if Combat_system.Damage_enemy(playerWeapon, attackMultiplier, playerRing) > enemyHealth:
-                Grafik_system.Enemy_struck()
-                Grafik_system.Killed_enemy()
-                input("Press enter to move on...  ")
-                incombat = False
+
+
+        #Potion _____________________________________________________________________________________
+        #Här slumpas chansen om spelaren ska få en ny potion eller inte
+        if potion_system.chance_to_give_potion(playerLevel) == True:
+            #Här slumpas potionens typ fram av potionsystenet
+            potiontype = potion_system.give_potion()
+            #Här läggs potiontypen till i spelarens potionlista
+            potionlist.append(potiontype)
+            Grafik_system.You_found_a_potion(potiontype)
+            time.sleep(2)
+
+
+
+
+        
+
+
+
+        #Monster ______________________________________________________________________________
+        #Här har spelaren chans att skippa att hamna i combat
+        if random.randint(1, 10) == 10:
+            Grafik_system.Dodged_enemy()
+            time.sleep(4)
+            skipcombat = True
             
-            else: 
-                enemyHealth = enemyHealth - Combat_system.Damage_enemy(playerWeapon, attackMultiplier, playerRing)
-                Grafik_system.Enemy_struck()
-                Grafik_system.Enemy_Survived(enemyHealth)
-                if len(potionlist) > 0:
-                    Grafik_system.Potion_inventory_show(potionlist)
-                    potionChoose = True
-                    while potionChoose == True:
-                        if int(input("Would you like to chose a potion? Yes => 1, no=> 2 --> ")) == 1:
-                            Grafik_system.Potion_inventory_choice(potionlist)
-                            potionChoice = int(input("wich potion type would you like to use?"))
-                            if  potionlist.count(potionChoice) > 0:
-                                potionlist.remove(potionChoice)
-                                potionChoose = False
-                                if potionChoice == 1:
-                                    heal = round( 100 * (0.1 * playerLevel + 1), 2)
-                                    playerHealth = playerHealth + heal
-                                    Grafik_system.You_used_a_healing_potion(heal, playerHealth)
-                                    
-                                if potionChoice == 2:
-                                    enemyHealth = enemyHealth - 100   
-                                    Grafik_system.You_used_a_damage_potion()
-                                if enemyHealth < 0:
-                                    Grafik_system.Killed_enemy()
-                                    input("Press enter to move on...  ")
-                                    incombat = False
+        else:
+            #Här finner spelaren ett monster med delvist slumpad attack och damage beroende level
+            enemyAttack, enemyHealth = Combat_system.found_enemy(playerLevel)
+            Grafik_system.Found_enemy(enemyAttack, enemyHealth)
+            time.sleep(3)
+            skipcombat = False
+
+            #Här ges spelaren en random attack multiplier
 
 
-                                if potionChoice == 3:
-                                    Grafik_system.You_used_an_attack_again_potion()
-                                    input("Press enter to move on...  ")
-                                    continue
+        incombat = True
+        enemyAlive = True
+        if skipcombat == False:
+            while incombat == True:
+                
+                #Här ges spelaren en random attack multiplier
+                attackMultiplier = Combat_system.Roll_dice()
+                Grafik_system.Dice_roll(attackMultiplier, playerWeapon, playerRing)
+                time.sleep(4)
+
+                if Combat_system.Damage_enemy(playerWeapon, attackMultiplier, playerRing) > enemyHealth:
+                    Grafik_system.Enemy_struck()
+                    Grafik_system.Killed_enemy()
+                    input("Press enter to move on...  ")
+                    incombat = False
+                
+                else: 
+                    enemyHealth = enemyHealth - Combat_system.Damage_enemy(playerWeapon, attackMultiplier, playerRing)
+                    Grafik_system.Enemy_struck()
+                    Grafik_system.Enemy_Survived(enemyHealth)
+
+
+                    if len(potionlist) > 0:
+                        Grafik_system.Potion_inventory_show(potionlist)
+                        potionChoose = True
+                        while potionChoose == True:
+                            if int(input("Would you like to use a potion? Yes => 1, no=> 2 --> ")) == 1:
+                                Grafik_system.Potion_inventory_choice(potionlist)
+                                potionChoice = int(input("wich potion type would you like to use?"))
+                                if  potionlist.count(potionChoice) > 0:
+                                    potionlist.remove(potionChoice)
+
+                                    potionChoose = False
+                                    if potionChoice == 1:
+                                        heal = round( 100 * (0.1 * playerLevel + 1), 2)
+                                        playerHealth = playerHealth + heal
+                                        Grafik_system.You_used_a_healing_potion(heal, playerHealth)
+                                        input("Press enter to move on...  ")
+
+                                    if potionChoice == 2:
+                                        enemyHealth = enemyHealth - 100   
+                                        Grafik_system.You_used_a_damage_potion()
+                                        if enemyHealth < 0:
+                                            Grafik_system.Killed_enemy()
+                                            input("Press enter to move on...  ")
+                                            incombat = False
+                                            enemyAlive = False
+                                        else:
+                                            Grafik_system.Enemy_Survived(enemyHealth)
+
+                                    if potionChoice == 3:
+                                        Grafik_system.You_used_an_attack_again_potion()
+                                        input("Press enter to move on...  ")
+
+                                        
+                                        if Combat_system.Damage_enemy(playerWeapon, attackMultiplier, playerRing) > enemyHealth:
+                                            Grafik_system.Enemy_struck()
+                                            Grafik_system.Killed_enemy()
+                                            input("Press enter to move on...  ")
+                                            incombat = False
+                                            enemyAlive = False
+                                        else: 
+                                            enemyHealth = enemyHealth - Combat_system.Damage_enemy(playerWeapon, attackMultiplier, playerRing)
+                                            Grafik_system.Enemy_struck()
+                                            Grafik_system.Enemy_Survived(enemyHealth)
+                                else:
+                                    Grafik_system.Potion_missing()
                             else:
-                                Grafik_system.Potion_missing()
+                                potionChoose = False
+
+
+                    if enemyAlive == True:
+                        if enemyAttack > playerArmor:
+                            playerHealth = Combat_system.Damage_player(enemyAttack, playerArmor, playerHealth)
+                            if playerHealth < 0:
+                                Grafik_system.Player_died()
+                                time.sleep(5) 
+                                exit()
+                            else:
+                                Grafik_system.Player_lost_health(playerHealth)
+                                time.sleep(5)
                         else:
-                            potionChoose = False
-
-
-
-                if enemyAttack > playerArmor:
-                    playerHealth = Combat_system.Damage_player(enemyAttack, playerArmor, playerHealth)
-                    if playerHealth < 0:
-                        Grafik_system.Player_died()
-                        time.sleep(5)
-                        exit()
-                    else:
-                        Grafik_system.Player_lost_health(playerHealth)
-                        time.sleep(5)
-                else:
-                    Grafik_system.Enemy_didnt_pierce_armor(enemyAttack, playerArmor)
-                    time.sleep(5)
-            
+                            Grafik_system.Enemy_didnt_pierce_armor(enemyAttack, playerArmor)
+                            time.sleep(5)
+except:
+    print("invalid input")                    
 
 
 

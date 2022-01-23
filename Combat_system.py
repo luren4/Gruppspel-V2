@@ -1,8 +1,8 @@
 import random
 
 def found_enemy(level):
-    enemy_attack = 50 + random.randint(20, 50) * level
-    enemy_health = 100 + random.randint(40, 80) * (1.2 * level)
+    enemy_attack = 50 + random.randint(25, 30) * level
+    enemy_health = 50 + random.randint(30, 85) * (1.25 * level)
     return (enemy_attack, enemy_health)
 
 def Roll_dice():

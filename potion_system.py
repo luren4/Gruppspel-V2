@@ -2,7 +2,7 @@ import random
 
 def chance_to_give_potion(level):
     chance = random.randint(1, 10) - 0.1 * level
-    if chance > 5:
+    if chance > 3.5:
         return True
     else:
         return False
